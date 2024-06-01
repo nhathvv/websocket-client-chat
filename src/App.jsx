@@ -8,7 +8,7 @@ function App() {
   const controller = new AbortController()
   useEffect(() => {
     const access_token = localStorage.getItem('access_token')
-    axios.defaults.baseURL = 'http://localhost:4000'
+    axios.defaults.baseURL='http://localhost:4000'
     axios.get('/users/me', {
       headers : {
         Authorization : `Bearer ${access_token}`
