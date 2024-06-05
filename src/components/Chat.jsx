@@ -29,13 +29,15 @@ export default function Chat() {
     })
   }
   useEffect(()=> {
-    socket.auth = {
-      _id : profile._id
-    }
-    socket.connect()
     socket.on('receiver_message', (data)=> {
       const {payload} = data
       setConversations((messages) => [...messages, payload])
+    })
+    socket.on("connect_error", (err) => {
+      console.log(err.data)
+    })
+    socket.on('disconnect',(arg) => {
+      console.log(arg)
     })
     return () => {
       socket.disconnect()
@@ -49,8 +51,8 @@ export default function Chat() {
           Authorization : `Bearer ${localStorage.getItem('access_token')}`
         },
         params: {
-          limit : 10,
-          page: 1
+          limit : 20,
+          page: 2
         }
       }).then((res)=> {
         // console.log(conversation.sender_id === profile._id)
